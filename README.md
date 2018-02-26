@@ -25,7 +25,7 @@ properties entry in pom
 dependency reference
 
     <dependency>
-        <groupId>uk.gov.dwp</groupId>
+        <groupId>uk.gov.dwp.logging</groupId>
         <artifactId>encoded-logger-output</artifactId>
         <version>${dwp.encoded_logger}</version>
     </dependency>
