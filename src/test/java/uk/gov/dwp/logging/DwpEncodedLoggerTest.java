@@ -1,19 +1,20 @@
-import gov.dwp.utilities.logging.DwpEncodedLogger;
+package uk.gov.dwp.logging;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
-public class ScenarioTest {
-    private static final Logger instance = DwpEncodedLogger.getLogger(ScenarioTest.class);
+public class DwpEncodedLoggerTest {
+    private static final Logger instance = DwpEncodedLogger.getLogger(DwpEncodedLoggerTest.class);
 
     private void runAsserts(String unencodedString, String encodedString) throws IOException {
         String lastFileEntry = getLastFileEntry();

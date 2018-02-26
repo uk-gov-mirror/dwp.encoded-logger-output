@@ -1,4 +1,4 @@
-package gov.dwp.utilities.logging;
+package uk.gov.dwp.logging;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerFactory;

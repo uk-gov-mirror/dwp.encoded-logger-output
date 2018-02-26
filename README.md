@@ -10,9 +10,9 @@ with the new implementation being
 
 `private static final Logger LOGGER = DwpEncodedLogger.getLogger(<class>);`
 
-This was created to mitigate the Checkmarx vulnerability **Heap_Inspection**:-
+This was created to mitigate the **Heap_Inspection** vulnerability :-
 
-`The application writes audit logs upon security-sensitive actions. Since the audit log includes user input that is neither checked for data type validity nor subsequently sanitized, the input could contain false information made to look like legitimate audit log data`
+_`The application writes audit logs upon security-sensitive actions. Since the audit log includes user input that is neither checked for data type validity nor subsequently sanitized, the input could contain false information made to look like legitimate audit log data`_
 
 #### Project inclusion
 
@@ -21,26 +21,11 @@ properties entry in pom
     <properties>
         <dwp.encoded_logger>x.x</dwp.encoded_logger>
     </properties>
-    
-internal Artifactory repository reference is required (plugin reference required for OWASP checks)
-
-    <repositories>
-        <repository>
-            <id>dwp internal</id>
-            <url>###REPOSITORY_URL###</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>dwp internal</id>
-            <url>###REPOSITORY_URL###</url>
-        </pluginRepository>
-    </pluginRepositories>
 
 dependency reference
 
     <dependency>
-        <groupId>gov.dwp.software-engineering</groupId>
+        <groupId>uk.gov.dwp</groupId>
         <artifactId>encoded-logger-output</artifactId>
         <version>${dwp.encoded_logger}</version>
     </dependency>
@@ -49,7 +34,7 @@ The type of logging (log4j.xml) file is not part of this package and should be s
 
 #### Example of use
 
-    import gov.dwp.utilities.logging.DwpEncodedLogger;
+    import uk.gov.dwp.logging.DwpEncodedLogger;
 
 _declaration_
 
