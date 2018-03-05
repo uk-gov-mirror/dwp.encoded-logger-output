@@ -1,4 +1,5 @@
 # DwpEncodedLogger
+[![Build Status](https://travis-ci.org/dwp/encoded-logger-output.svg?branch=master)](https://travis-ci.org/dwp/encoded-logger-output) [![Known Vulnerabilities](https://snyk.io/test/github/dwp/encoded-logger-output/badge.svg)](https://snyk.io/test/github/dwp/encoded-logger-output)
 
 This logger wraps the `org.apache.log4j.Logger` to prevent log forging by removing all control characters from the input message before allowing it to be logged.
 
