@@ -1,5 +1,9 @@
 language: java
 
+branches:
+  only:
+  - master
+  
 stages:
   - unit-test
   - owasp-check
