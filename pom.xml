@@ -8,8 +8,40 @@
     <artifactId>encoded-logger-output</artifactId>
     <version>1.1.0</version>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Wrapper class to sanitise log output and mitigate possible log forging</description>
+    <url>https://github.com/dwp/encoded-logger-output</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <distribution>repo</distribution>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Chris Hulley</name>
+            <organization>DWP</organization>
+            <email>chris.hulley@dwp.gsi.gov.uk</email>
+            <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/dwp/encoded-logger-output.git</connection>
+        <developerConnection>scm:git:ssh://github.com:dwp/encoded-logger-output.git</developerConnection>
+        <url>https://github.com/dwp/encoded-logger-output</url>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <mvn-javadoc.version>2.10.4</mvn-javadoc.version>
+        <mvn-source.version>3.0.1</mvn-source.version>
+        <mvn-gpg.version>1.6</mvn-gpg.version>
         <log4j.version>1.2.17</log4j.version>
         <owasp.version>1.4.5</owasp.version>
         <junit.version>4.12</junit.version>
@@ -60,12 +92,43 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${mvn-javadoc.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${mvn-source.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${mvn-gpg.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

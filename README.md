@@ -39,7 +39,7 @@ The type of logging (log4j.xml) file is not part of this package and should be s
 
 _declaration_
 
-    private static final Logger LOGGER = DwpEncodedLogger.getLogger(SecureStrings.class.getName());
+    private static final Logger LOGGER = DwpEncodedLogger.getLogger(<my-classname>.class.getName());
 
 and then usage as normal
 
