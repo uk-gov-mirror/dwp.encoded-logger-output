@@ -1,7 +1,8 @@
 package uk.gov.dwp.logging;
 
-import org.apache.log4j.Logger;
+
 import org.junit.Test;
+import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,9 +10,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URLDecoder;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class DwpEncodedLoggerTest {
     private static final Logger instance = DwpEncodedLogger.getLogger(DwpEncodedLoggerTest.class);
@@ -30,6 +35,19 @@ public class DwpEncodedLoggerTest {
 
         instance.info(unencodedString);
         runAsserts(unencodedString, encodedString);
+    }
+
+    @Test
+    public void testStackTraceIsPresent() throws IOException {
+        try {
+            instance.info("was {}, now {}", 1001, 1001 / Integer.valueOf("oops"));
+            fail("should with number error");
+
+        } catch (NumberFormatException e) {
+            instance.error(e.getMessage(), e);
+        }
+
+        assertThat("should have stack trace", getLastFileEntry(), containsString("main("));
     }
 
     @Test
@@ -57,6 +75,15 @@ public class DwpEncodedLoggerTest {
 
         instance.info(unecodedString);
         runAsserts(unecodedString, encodedString);
+    }
+
+    @Test
+    public void checkLevelsSetCorrectlyFromXML() {
+        assertFalse("trace should be false", instance.isTraceEnabled());
+        assertFalse("debug should be false", instance.isDebugEnabled());
+        assertTrue("info should be true", instance.isInfoEnabled());
+        assertTrue("warn should be true", instance.isWarnEnabled());
+        assertTrue("error should be true", instance.isErrorEnabled());
     }
 
     @Test

@@ -1,50 +1,56 @@
 package uk.gov.dwp.logging;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 
-public class DwpEncodedLogger extends Logger {
-    private static DwpEncodedLoggerFactory dwpEncodedLoggerFactory = new DwpEncodedLoggerFactory();
+import java.lang.reflect.Proxy;
+import java.util.stream.Stream;
+
+public class DwpEncodedLogger {
     private static final String LOG_STANDARD_REGEX = "[\\u0000-\\u001f]";
 
-    protected DwpEncodedLogger(String name) {
-        super(name);
-    }
-
-    public static Logger getLogger(String name) {
-        return Logger.getLogger(String.format("%s (dwp encoded)", name), dwpEncodedLoggerFactory);
+    private DwpEncodedLogger() {
+        // private on purpose
     }
 
     public static Logger getLogger(Class clazz) {
         return getLogger(clazz.getName());
     }
 
-    @Override
-    public void trace(Object message) {
-        super.trace(message.toString().replaceAll(LOG_STANDARD_REGEX, ""));
+    public static Logger getLogger(String name) {
+        return wrap(LoggerFactory.getLogger(String.format("%s (dwp encoded)", name)));
     }
 
-    @Override
-    public void debug(Object message) {
-        super.debug(message.toString().replaceAll(LOG_STANDARD_REGEX, ""));
+    private static Object sanitise(Object obj) {
+        if ((!(obj instanceof Marker)) && (!(obj instanceof Throwable))) {
+            return obj.toString().replaceAll(LOG_STANDARD_REGEX, "");
+        } else {
+            return obj;
+        }
     }
 
-    @Override
-    public void info(Object message) {
-        super.info(message.toString().replaceAll(LOG_STANDARD_REGEX, ""));
+    private static Object[] sanitise(Object[] obj) {
+        return Stream.of(obj).map(DwpEncodedLogger::sanitise).toArray(Object[]::new);
     }
 
-    @Override
-    public void warn(Object message) {
-        super.warn(message.toString().replaceAll(LOG_STANDARD_REGEX, ""));
-    }
+    private static Logger wrap(Logger logger) {
+        return (Logger) Proxy.newProxyInstance(
+                DwpEncodedLogger.class.getClassLoader(),
+                new Class[]{Logger.class},
+                (proxy, method, methodArgs) -> {
+                    switch (method.getName()) {
+                        case "trace":
+                        case "debug":
+                        case "info":
+                        case "warn":
+                        case "error":
+                            return method.invoke(logger, sanitise(methodArgs));
+                        default:
+                            return method.invoke(logger, methodArgs);
 
-    @Override
-    public void error(Object message) {
-        super.error(message.toString().replaceAll(LOG_STANDARD_REGEX, ""));
-    }
-
-    @Override
-    public void fatal(Object message) {
-        super.fatal(message.toString().replaceAll(LOG_STANDARD_REGEX, ""));
+                    }
+                }
+        );
     }
 }

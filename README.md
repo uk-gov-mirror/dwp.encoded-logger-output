@@ -1,7 +1,7 @@
 # DwpEncodedLogger
 [![Build Status](https://travis-ci.org/dwp/encoded-logger-output.svg?branch=master)](https://travis-ci.org/dwp/encoded-logger-output) [![Known Vulnerabilities](https://snyk.io/test/github/dwp/encoded-logger-output/badge.svg)](https://snyk.io/test/github/dwp/encoded-logger-output)
 
-This logger wraps the `org.apache.log4j.Logger` to prevent log forging by removing all control characters from the input message before allowing it to be logged.
+This logger wraps the `org.slf4j.Logger` to prevent log forging by removing all control characters from the input message before allowing it to be logged.
 
 Usage is the same as the original Logger
 
@@ -31,7 +31,7 @@ dependency reference
         <version>${dwp.encoded_logger}</version>
     </dependency>
     
-The type of logging (log4j.xml) file is not part of this package and should be set by the service using this utility.
+The type of logging framework that implements the `slf4j-api` needs to be included in the project along with the framework configuration files.  (eg. the `src/test` path implements `slf4j-log4j12`)
 
 #### Example of use
 
@@ -41,11 +41,4 @@ _declaration_
 
     private static final Logger LOGGER = DwpEncodedLogger.getLogger(<my-classname>.class.getName());
 
-and then usage as normal
-
-    LOGGER.trace("test");
-    LOGGER.debug("test");
-    LOGGER.info("test");
-    LOGGER.warn("test");
-    LOGGER.error("test");
-    LOGGER.fatal("test");
+and then usage as normal for slf4j implementations (https://www.slf4j.org/api/org/slf4j/Logger.html)
