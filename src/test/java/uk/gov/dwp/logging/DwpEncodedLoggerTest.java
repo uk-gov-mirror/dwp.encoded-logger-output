@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -26,6 +27,34 @@ public class DwpEncodedLoggerTest {
 
         assertThat("should not contain the passed log", lastFileEntry, not(endsWith(unencodedString)));
         assertThat("should be encoded", lastFileEntry, endsWith(encodedString));
+    }
+
+    @Test
+    public void testSixParameterObjectArrayInfoMessageIsOk() throws IOException {
+        instance.info("{} {} {} {} {} {}", "l\n\n\n\tog", 1, true, Arrays.asList("o\t\nne", "t\0wo", "thr\tee"), "hell\n\no", false);
+        runAsserts("l\n\n\n\tog 1 true o\t\nne t\0wo thr\tee hell\n\no falsee", "log 1 true [one, two, three] hello false");
+    }
+
+    @Test
+    public void testThreeParameterObjectArrayInfoMessageIsOk() throws IOException {
+        Object[] paramArray = new Object[]{"l\n\n\n\tog", 1, true};
+
+        instance.info("{} {} {}", paramArray);
+        runAsserts("l\n\n\n\tog 1 true", "log 1 true");
+    }
+
+    @Test
+    public void testThreeParameterInfoMessageIsOk() throws IOException {
+        instance.info("{} {} {}", "l\n\n\n\tog", 1, true);
+        runAsserts("l\n\n\n\tog 1 true", "log 1 true");
+    }
+
+    @Test
+    public void testThreeParameterNullInfoMessageIsOk() throws IOException {
+        Object[] paramArray = new Object[]{"l\n\n\n\tog", null, true};
+
+        instance.info("{} {} {}", paramArray);
+        runAsserts("l\n\n\n\tog null true", "log null true");
     }
 
     @Test

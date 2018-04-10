@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
 import java.lang.reflect.Proxy;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class DwpEncodedLogger {
@@ -18,16 +19,24 @@ public class DwpEncodedLogger {
         return getLogger(clazz.getName());
     }
 
-    public static Logger getLogger(String name) {
+    private static Logger getLogger(String name) {
         return wrap(LoggerFactory.getLogger(String.format("%s (dwp encoded)", name)));
     }
 
+    private static Object doSanitisation(Object obj) {
+        return obj instanceof Object[] ? DwpEncodedLogger.sanitise((Object[]) obj) : obj.toString().replaceAll(LOG_STANDARD_REGEX, "");
+
+    }
+
+    private static boolean shouldBeSanitised(Object obj) {
+        return (!(obj instanceof Marker)) && (!(obj instanceof Throwable));
+    }
+
     private static Object sanitise(Object obj) {
-        if ((!(obj instanceof Marker)) && (!(obj instanceof Throwable))) {
-            return obj.toString().replaceAll(LOG_STANDARD_REGEX, "");
-        } else {
-            return obj;
-        }
+        return Optional.ofNullable(obj)
+                .filter(DwpEncodedLogger::shouldBeSanitised)
+                .map(DwpEncodedLogger::doSanitisation)
+                .orElse(obj);
     }
 
     private static Object[] sanitise(Object[] obj) {
