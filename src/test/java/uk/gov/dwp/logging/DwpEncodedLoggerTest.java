@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class DwpEncodedLoggerTest {
+    private static final Logger instance2 = DwpEncodedLogger.getLogger(DwpEncodedLoggerTest.class.getName());
     private static final Logger instance = DwpEncodedLogger.getLogger(DwpEncodedLoggerTest.class);
 
     private void runAsserts(String unencodedString, String encodedString) throws IOException {
@@ -27,6 +28,14 @@ public class DwpEncodedLoggerTest {
 
         assertThat("should not contain the passed log", lastFileEntry, not(endsWith(unencodedString)));
         assertThat("should be encoded", lastFileEntry, endsWith(encodedString));
+    }
+
+    @Test
+    public void runWithSecondInstance() throws IOException {
+        Object[] paramArray = new Object[]{"l\n\n\n\tog", 1, true};
+
+        instance.info("{} {} {}", paramArray);
+        runAsserts("l\n\n\n\tog 1 true", "log 1 true");
     }
 
     @Test

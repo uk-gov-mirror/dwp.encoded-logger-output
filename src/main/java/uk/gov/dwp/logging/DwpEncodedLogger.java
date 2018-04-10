@@ -19,7 +19,7 @@ public class DwpEncodedLogger {
         return getLogger(clazz.getName());
     }
 
-    private static Logger getLogger(String name) {
+    public static Logger getLogger(String name) {
         return wrap(LoggerFactory.getLogger(String.format("%s (dwp encoded)", name)));
     }
 
