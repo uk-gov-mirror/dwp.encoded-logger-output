@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property resource="application.yml"/>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <charset>UTF-8</charset>
+        <encoder class="uk.gov.dwp.logging.logback.JsonEncoder">
+            <appName>${app_name}</appName>
+            <appVersion>${app_version}</appVersion>
+        </encoder>
+    </appender>
+    <appender name="FILEOUT" class="ch.qos.logback.core.FileAppender" >
+        <charset>UTF-8</charset>
+        <File>src/test/resources/encoded_logging.log</File>
+        <Append>false</Append>
+        <BufferedIO>true</BufferedIO>
+        <encoder class="uk.gov.dwp.logging.logback.JsonEncoder">
+            <appName>${app_name}</appName>
+            <appVersion>${app_version}</appVersion>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILEOUT"  />
+    </root>
+
+</configuration>
