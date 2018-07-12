@@ -12,7 +12,7 @@ _`The application writes audit logs upon security-sensitive actions. Since the a
 There are implementations for `LogBack` and `Log4j2`
 
 The library assumes that the desired logging implementation  is provided on the 
-class path.
+class path.  The default log level is **_INFO_**.
 
 #### Project inclusion
 
