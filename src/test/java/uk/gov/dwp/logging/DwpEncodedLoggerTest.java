@@ -1,6 +1,7 @@
 package uk.gov.dwp.logging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.format.DateTimeFormatter;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -33,6 +35,8 @@ public class DwpEncodedLoggerTest {
 
         assertThat("should not contain the passed log", lastFileEntry, not(containsString(unencodedString)));
         assertThat("should be encoded", lastFileEntry, containsString(new ObjectMapper().writeValueAsString(encodedString)));
+        assertNotNull("should produce valid ISO 8601 datetime", DateTimeFormatter.ISO_INSTANT.parse(
+                new ObjectMapper().readTree(lastFileEntry).get("ts").asText()));
     }
 
     @Test

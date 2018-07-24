@@ -6,7 +6,7 @@
 
     <groupId>uk.gov.dwp.logging</groupId>
     <artifactId>encoded-logger-output</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Wrapper class to sanitise log output and mitigate possible log forging</description>
@@ -37,6 +37,12 @@
             <name>Andrew Valentine</name>
             <organization>DWP</organization>
             <email>andrew.valentine@dwp.gsi.gov.uk</email>
+            <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
+        </developer>
+        <developer>
+            <name>Matthew Ball</name>
+            <organization>DWP</organization>
+            <email>matthew.ball@dwp.gsi.gov.uk</email>
             <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
         </developer>
     </developers>
