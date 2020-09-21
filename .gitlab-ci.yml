@@ -1,0 +1,43 @@
+variables:
+  # Product
+  PRODUCT: shared
+  BUILD_TYPE: MAVEN
+  MAVEN_IMAGE: "maven:3-jdk-11"
+  MVN_OPTS: "-DLOG_LEVEL=INFO -Dgpg.skip=true"
+  MVN_CLI_OPTS: "-Dhttp.proxyHost=proxy.local.dwpcloud.uk -Dhttp.proxyPort=3128 -Dhttp.nonProxyHosts='localhost|docker|127.0.0.1' -Dhttps.proxyHost=proxy.local.dwpcloud.uk -Dhttps.proxyPort=3128 -Dhttps.nonProxyHosts='localhost|docker|127.0.0.1' --batch-mode"
+  GITHUB_REPO_NAME: encoded-logger-output #open sourced dependency
+
+stages:
+  - update-version
+  - code-quality
+  - code-test
+  - application-build
+  - code-analysis
+  - library-publish
+  - update-project-metadata
+  - create-schedules
+  - open-source
+
+include:
+  - local: "/gitlab-ci/includes.yml"
+
+required-fragment-check:
+  variables:
+    RULESET: MAVEN_CI_LIBRARY
+
+checkmarx:
+  allow_failure: true
+
+create-project-badges:
+  dependencies:
+    - todo-check
+  variables:
+    ARTIFACT_BADGE: "false"
+
+create-develop-nightly-schedule:
+  extends: .add-schedule
+  variables:
+    SCHEDULE_NAME: Nightly-Develop-CI-Build
+    SCHEDULE_BRANCH: develop
+    SCHEDULE_CRON: "0 20 * * *"
+    RANDOMIZE_MINS: "true"
