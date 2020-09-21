@@ -1,0 +1,65 @@
+include:
+    #.pre
+    - project: 'wa-transformation/pipeline-fragments/credential-check'
+      ref: 1-0-0
+      file: 'ci-include-credential-check.yml'
+    - project: 'wa-transformation/pipeline-fragments/fragment-version-check'
+      ref: 1-1-0
+      file: 'ci-include-fragment-version-check.yml'
+    - project: 'wa-transformation/pipeline-fragments/required-fragment-check'
+      ref: 1-4-0
+      file: 'ci-include-required-fragment-check.yml'
+    #update-version
+    - project: 'wa-transformation/pipeline-fragments/update-semver'
+      ref: 3-0-0
+      file: 'ci-include-update-semver.yml'
+    #code-quality
+    - project: 'wa-transformation/pipeline-fragments/gitleaks'
+      ref: 1-2-0
+      file: 'ci-include-gitleaks.yml'
+    - project: 'wa-transformation/pipeline-fragments/shell-check'
+      ref: 2-0-0
+      file: 'ci-include-shell-check.yml'
+    - project: 'wa-transformation/pipeline-fragments/todo-checker'
+      ref: 1-0-1
+      file: 'ci-include-todo-checker.yml'
+    - project: 'wa-transformation/pipeline-fragments/maven-checkstyle-lint'
+      ref: 2-0-0
+      file: 'ci-include-maven-checkstyle-lint.yml'
+    #code-test
+    - project: 'wa-transformation/pipeline-fragments/maven-api-test'
+      ref: 2-0-0
+      file: 'ci-include-maven-api-test.yml'
+    #application-build
+    - project: 'wa-transformation/pipeline-fragments/maven-api-build'
+      ref: 2-0-0
+      file: 'ci-include-maven-api-build.yml'
+    #code-analysis
+    - project: 'wa-transformation/pipeline-fragments/maven-api-pitest'
+      ref: 2-0-0
+      file: 'ci-include-maven-api-pitest.yml'
+    - project: 'wa-transformation/pipeline-fragments/maven-api-spotbugs'
+      ref: 2-1-0
+      file: 'ci-include-maven-api-spotbugs.yml'
+    - project: 'wa-transformation/pipeline-fragments/checkmarx'
+      ref: 1-0-1
+      file: 'ci-include-checkmarx.yml'
+    - project: 'wa-transformation/pipeline-fragments/sonarqube'
+      ref: 3-0-0
+      file: 'ci-include-sonar_scanner.yml'
+    #nexus-publish
+    - project: 'wa-transformation/pipeline-fragments/nexus-publish'
+      ref: 1-0-0
+      file: 'ci-include-nexus-publish.yml'
+    #update-project-metadata
+    - project: 'wa-transformation/pipeline-fragments/create-project-badges'
+      ref: 1-0-2
+      file: 'ci-include-create-project-badges.yml'
+  #open-sourcing
+    - project: 'wa-transformation/pipeline-fragments/open-source'
+      ref: 1-0-0
+      file: 'ci-include-open-source.yml'
+    #schedule create
+    - project: 'wa-transformation/pipeline-fragments/schedule-creation'
+      ref: 1-1-0
+      file: 'ci-include-schedule-creation.yml'
