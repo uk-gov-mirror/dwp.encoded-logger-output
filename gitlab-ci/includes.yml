@@ -1,13 +1,13 @@
 include:
     #.pre
     - project: 'dwp/engineering/pipeline-fragments/credential-check'
-      ref: 2-1-0
+      ref: 2-2-0
       file: 'ci-include-credential-check.yml'
     - project: 'dwp/engineering/pipeline-fragments/fragment-version-check'
       ref: 2-3-0
       file: 'ci-include-fragment-version-check.yml'
     - project: 'dwp/engineering/pipeline-fragments/required-fragment-check'
-      ref: 2-5-0
+      ref: 2-7-0
       file: 'ci-include-required-fragment-check.yml'
     #update-version
     - project: 'dwp/engineering/pipeline-fragments/update-semver'
@@ -42,7 +42,7 @@ include:
       ref: 3-1-0
       file: 'ci-include-maven-api-spotbugs.yml'
     - project: 'dwp/engineering/pipeline-fragments/sonarqube'
-      ref: 4-2-1
+      ref: 4-3-0
       file: 'ci-include-sonar-scanner.yml'
     - project: 'dwp/engineering/pipeline-fragments/maven-dependency-version-check'
       ref: 2-1-0
@@ -51,9 +51,13 @@ include:
     - project: 'dwp/engineering/pipeline-fragments/nexus-publish'
       ref: 2-0-0
       file: 'ci-include-nexus-publish.yml'
+    #package-repository-publish
+    - project: 'dwp/engineering/pipeline-fragments/package-registry-publish'
+      ref: 1-0-1
+      file: 'ci-include-package-publish.yml'
     #update-project-metadata
     - project: 'dwp/engineering/pipeline-fragments/create-project-badges'
-      ref: 2-0-0
+      ref: 2-1-0
       file: 'ci-include-create-project-badges.yml'
     #open-sourcing
     - project: 'dwp/engineering/pipeline-fragments/open-source'
@@ -61,7 +65,7 @@ include:
       file: 'ci-include-open-source.yml'
     #schedule create
     - project: 'dwp/engineering/pipeline-fragments/schedule-creation'
-      ref: 2-2-0
+      ref: 2-3-0
       file: 'ci-include-schedule-creation.yml'
     #repo-gen
     - project: 'dwp/engineering/pipeline-fragments/apply-repo-config'
