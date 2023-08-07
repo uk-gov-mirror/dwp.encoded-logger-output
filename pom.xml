@@ -6,7 +6,7 @@
 
   <groupId>uk.gov.dwp.logging</groupId>
   <artifactId>encoded-logger-output</artifactId>
-  <version>2.2.3</version>
+  <version>3.0.0</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Wrapper class to sanitise log output and mitigate possible log forging</description>
@@ -27,22 +27,32 @@
       <email>christopher.white@dwp.gov.uk</email>
       <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
     </developer>
+
     <developer>
       <name>Chris Hulley</name>
       <organization>DWP</organization>
       <email>chris.hulley@dwp.gov.uk</email>
       <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
     </developer>
+
     <developer>
       <name>Andrew Valentine</name>
       <organization>DWP</organization>
       <email>andrew.valentine@dwp.gov.uk</email>
       <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
     </developer>
+
     <developer>
       <name>Matthew Ball</name>
       <organization>DWP</organization>
       <email>matthew.ball@dwp.gov.uk</email>
+      <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
+    </developer>
+
+    <developer>
+      <name>Hakan Bali</name>
+      <organization>DWP</organization>
+      <email>hakan.bali@dwp.gov.uk</email>
       <organizationUrl>http://www.gov.uk/dwp</organizationUrl>
     </developer>
   </developers>
@@ -55,21 +65,23 @@
   </scm>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-    <plugin.spotbugs.version>4.0.0</plugin.spotbugs.version>
-    <maven.compiler.version>3.8.1</maven.compiler.version>
-    <mvn-javadoc.version>3.2.0</mvn-javadoc.version>
-    <log4j-core.version>2.17.2</log4j-core.version>
-    <mvn-source.version>3.0.1</mvn-source.version>
-    <jackson.version>2.13.2.2</jackson.version>
-    <logback.version>1.2.11</logback.version>
+    <java.version>17</java.version>
+    <maven.compiler.version>3.11.0</maven.compiler.version>
+    <owasp.version>8.3.1</owasp.version>
+    <jacoco.version>0.8.10</jacoco.version>
+    <logback.version>1.4.7</logback.version>
+    <jackson.version>2.15.2</jackson.version>
+    <mvn-source.version>3.2.1</mvn-source.version>
+    <mvn-javadoc.version>3.5.0</mvn-javadoc.version>
+    <spotbugs.version>4.7.3</spotbugs.version>
+    <spotbugs-maven-plugin.version>4.7.3.5</spotbugs-maven-plugin.version>
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <log4j-core.version>2.20.0</log4j-core.version>
     <mvn-gpg.version>1.6</mvn-gpg.version>
-    <jacoco.version>0.8.5</jacoco.version>
     <slf4j.version>1.7.25</slf4j.version>
-    <owasp.version>7.1.0</owasp.version>
     <junit.version>4.13.2</junit.version>
-    <java.version>11</java.version>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -78,32 +90,36 @@
       <artifactId>jackson-databind</artifactId>
       <version>${jackson.version}</version>
     </dependency>
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>${logback.version}</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
       <version>${log4j-core.version}</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
       <version>2.2</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
+
   <build>
     <resources>
       <resource>
@@ -120,15 +136,16 @@
       </resource>
     </resources>
     <plugins>
+
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven.compiler.version}</version>
+        <configuration>
+          <release>${java.version}</release>
+        </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
@@ -146,6 +163,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -159,6 +177,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -172,6 +191,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -186,6 +206,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -229,15 +250,16 @@
           </excludes>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>${plugin.spotbugs.version}</version>
+        <version>${spotbugs-maven-plugin.version}</version>
         <dependencies>
           <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs</artifactId>
-            <version>${plugin.spotbugs.version}</version>
+            <version>${spotbugs.version}</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -248,5 +270,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>

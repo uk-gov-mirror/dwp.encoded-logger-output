@@ -8,6 +8,13 @@ This project was originally created to mitigate the **Heap_Inspection** vulnerab
 
 _`The application writes audit logs upon security-sensitive actions. Since the audit log includes user input that is neither checked for data type validity nor subsequently sanitized, the input could contain false information made to look like legitimate audit log data`_
 
+### [Breaking Change with Java17](https://spring.io/blog/2022/05/24/preparing-for-spring-boot-3-0)
+A breaking change is introduced with version 3.0.0 which is Java 17 upgrade.
+
+Jakarta EE 9 a new top-level jakarta package, replacing EE 8’s javax top-level package. For example, the Servlet specification in Jakarta EE 8 uses a javax.servlet package but this has changed to jakarta.servlet in EE 9.
+
+Generally speaking, it’s not possible to mix Java EE and Jakarta EE APIs in the same project. You need to ensure that your own code, as well as all third-party libraries are using jakarta.* package imports.
+
 ## Implementations
 There are implementations for `LogBack` and `Log4j2`
 

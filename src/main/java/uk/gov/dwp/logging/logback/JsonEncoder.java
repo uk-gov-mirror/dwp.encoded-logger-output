@@ -4,10 +4,9 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxyUtil;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.encoder.EncoderBase;
-import uk.gov.dwp.logging.LogEntryBuilderFactory;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+import uk.gov.dwp.logging.LogEntryBuilderFactory;
 
 @SuppressWarnings("squid:S1168") // allow null to be returned from byte arrays
 public class JsonEncoder extends EncoderBase<ILoggingEvent> {

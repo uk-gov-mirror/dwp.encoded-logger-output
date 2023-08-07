@@ -1,5 +1,7 @@
 package uk.gov.dwp.logging.log4j2;
 
+import java.nio.charset.Charset;
+import java.util.Optional;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginAttribute;
@@ -7,9 +9,6 @@ import org.apache.logging.log4j.core.config.plugins.PluginFactory;
 import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 import org.apache.logging.log4j.core.util.Throwables;
 import uk.gov.dwp.logging.LogEntryBuilderFactory;
-
-import java.nio.charset.Charset;
-import java.util.Optional;
 
 @Plugin(name = "DwpJsonLayout", category = "Core", elementType = "layout", printObject = true)
 public final class DwpJsonLayout extends AbstractStringLayout {
